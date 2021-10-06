@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 
 // cmp
 import Spinner from '../layout/Spinner';
+import Repos from '../repos/Repos';
 
 export default class User extends Component {
   componentDidMount() {
     this.props.getUser(this.props.match.params.login);
-    console.log(this.props);
+    this.props.getUserRepos(this.props.match.params.login);
   }
 
   render() {
@@ -27,7 +28,7 @@ export default class User extends Component {
       hireable,
     } = this.props.user;
 
-    const { loading } = this.props;
+    const { loading, repos } = this.props;
 
     if (loading) return <Spinner />;
 
@@ -96,6 +97,8 @@ export default class User extends Component {
           <div className="badge badge-white">Public Repos: {public_repos}</div>
           <div className="badge badge-dark">Public Gists: {public_gists}</div>
         </div>
+
+        <Repos repos={repos} />
       </Fragment>
     );
   }
